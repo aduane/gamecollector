@@ -1,9 +1,13 @@
 class UsersController < ApplicationController
   before_filter :authenticate_user!
-  before_filter :admin_only, :except => :show
+  before_filter :admin_only, except: [:show, :my_collection]
 
   def index
     @users = User.all
+  end
+
+  def my_collection
+    @user = current_user
   end
 
   def show
