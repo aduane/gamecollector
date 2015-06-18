@@ -8,6 +8,12 @@
         %span.icon-bar
         %span.icon-bar
       = link_to 'Home', root_path, class: 'navbar-brand'
+
+      %form.navbar-form.navbar-left{method: 'get', action: search_url}
+        .form-group
+          %input#search_term.form-control{type: "text", placeholder: "Super Bros. 8", name: "search_term"}
+          %button.btn.btn-default{type: "submit"}
+            Search
     .collapse.navbar-collapse
       %ul.nav.navbar-nav
         = render 'layouts/navigation_links'

@@ -1,0 +1,9 @@
+- if @search_results.empty?
+  %h3
+    No games matched your search.
+- else
+  %h3
+    #{@search_results.count} #{'game'.pluralize(@search_results.count)} matched your search.
+  .row
+    - @search_results.each do |game|
+      = render "games/search", game: game

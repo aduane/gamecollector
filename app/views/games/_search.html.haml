@@ -1,0 +1,8 @@
+.col-md-3
+  .game-search-item
+    %strong= game.title
+    %br
+    %small= game.platform
+    %br
+    -# Workaround for bad parsing in API client
+    %small= game.instance_variable_get(:@release_date)
