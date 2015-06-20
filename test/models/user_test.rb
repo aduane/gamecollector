@@ -29,5 +29,17 @@ class UserTest < ActiveSupport::TestCase
       @user.add_to_collection(7)
       assert_equal 1, @user.collection.possessions.where(gbd_id: 7).count
     end
+  context "#remove_from_collection" do
+    setup do
+      @user.add_to_collection(7, "Fun Game", "Gamebox")
+    end
+
+    should "destroy any possesions matching the user's collection and the given gbd_id" do
+      assert_equal 1, Possession.where(list_id: @user.collection.id, gbd_id: 7).count
+      @user.remove_from_collection(7)
+      assert_equal 0, Possession.where(list_id: @user.collection.id, gbd_id: 7).count
+    end
+  end
+
   end
 end

@@ -1,0 +1,12 @@
+$ ->
+  $("table.tablesorter").tablesorter({
+    theme: "bootstrap",
+    widthFixed: true,
+    headerTemplate : '{content} {icon}',
+    widgets : [ "uitheme" ],
+    headers: {
+        3: {
+            sorter: false
+          }
+      }
+  });

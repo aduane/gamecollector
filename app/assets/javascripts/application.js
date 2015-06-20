@@ -14,4 +14,6 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require bootstrap-sprockets
+//= require jquery-tablesorter
+//= require jquery-tablesorter/widgets/widget-uitheme
 //= require_tree .

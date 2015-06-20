@@ -12,6 +12,8 @@ class User < ActiveRecord::Base
 
   def add_to_collection(gbd_id)
     collection.possessions.create!(gbd_id: gbd_id)
+  def remove_from_collection(gbd_id)
+    collection.possessions.where(gbd_id: gbd_id).destroy_all
   end
 
   # generated omniauth code

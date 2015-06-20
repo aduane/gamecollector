@@ -2,11 +2,17 @@ When(/^I view my collection$/) do
   visit '/my_collection'
 end
 
-Given(/^I own (\d+) "(.*?)" Games$/) do |number, name|
+Given(/^I own (\d+) "(.*?)" Game.?$/) do |number, name|
   user = User.last
   1.upto(number.to_i) do |num|
     gbd_id = stub_game(num, "#{name} #{num}")
-    user.add_to_collection(gbd_id)
+    user.add_to_collection(gbd_id, "#{name} #{num}", "Game Box")
+  end
+end
+
+When(/^I click the button to remove a game from my collection$/) do
+  within ".game-list" do
+    click_on("X")
   end
 end
 

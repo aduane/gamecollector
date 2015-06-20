@@ -2,6 +2,7 @@ require_relative '../test_helper'
 
 class PossessionTest < ActiveSupport::TestCase
   should belong_to :list
+  should validate_presence_of :gbd_id
 
   context "#game" do
     should "return a game object with the possession's gbd_id set" do
