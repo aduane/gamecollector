@@ -29,6 +29,14 @@ class UserTest < ActiveSupport::TestCase
       @user.add_to_collection(7)
       assert_equal 1, @user.collection.possessions.where(gbd_id: 7).count
     end
+
+    should "store some game information to reduce api calls" do
+      @user.add_to_collection(7, "Fun Game", "Gamebox")
+      assert_equal "Fun Game", Possession.last.game_title
+      assert_equal "Gamebox", Possession.last.game_platform
+    end
+  end
+
   context "#remove_from_collection" do
     setup do
       @user.add_to_collection(7, "Fun Game", "Gamebox")
@@ -41,5 +49,13 @@ class UserTest < ActiveSupport::TestCase
     end
   end
 
+  context "#owns_game?" do
+    should "return true if the given game is in the set of the user's owned_games" do
+      game1 = Game.from_gbd_id(7)
+      game2 = Game.from_gbd_id(8)
+      @user.add_to_collection(7, "Fun Game", "Gamebox")
+      assert !@user.owns_game?(game2)
+      assert @user.owns_game?(game1)
+    end
   end
 end

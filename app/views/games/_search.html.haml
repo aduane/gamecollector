@@ -1,8 +1,19 @@
 .col-md-3
-  .game-search-item
+  %div{class: "game-search-item game-#{game.gbd_id}"}
+    %img.boxart{src: asset_path("boxart-not-found.png"), alt: game.title, data: { src: "http://thegamesdb.net/banners/boxart/thumb/original/front/#{game.gbd_id}-1.jpg" } }
     %strong= game.title
     %br
     %small= game.platform
     %br
     -# Workaround for bad parsing in API client
     %small= game.instance_variable_get(:@release_date)
+    %br
+    - if current_user.owns_game?(game)
+      %a.btn.btn-success.disabled
+        In your collection
+    - else
+      = form_tag( add_to_collection_url, method: :post, remote: true, class: "add-to-collection-#{game.gbd_id}" ) do
+        = hidden_field_tag :gbd_id, game.gbd_id
+        = hidden_field_tag :game_title, game.title
+        = hidden_field_tag :game_platform, game.platform
+        = submit_tag "Add to collection", class: "btn btn-primary"

@@ -4,7 +4,10 @@ Rails.application.routes.draw do
   get '/auth/:provider/callback' => 'sessions#create'
   # collection
   get '/my_collection' => 'collection#show', as: :my_collection
+  post '/collection/add_to_collection', as: :add_to_collection
   post '/collection/remove_from_collection', as: :remove_from_collection
+  
+  # search
   get '/search' => 'search#index', as: :search
   get '/signin' => 'sessions#new', as: :signin
   get '/signout' => 'sessions#destroy', as: :signout

@@ -7,11 +7,17 @@ class User < ActiveRecord::Base
   end
 
   def owned_games
-    collection.games
+    @owned_games ||= collection.games
   end
 
-  def add_to_collection(gbd_id)
-    collection.possessions.create!(gbd_id: gbd_id)
+  def owns_game?(game)
+    owned_games.map(&:gbd_id).include?(game.gbd_id.to_i)
+  end
+
+  def add_to_collection(gbd_id, title = "Title not found", platform = "Platform not found")
+    collection.possessions.create(gbd_id: gbd_id, game_title: title, game_platform: platform)
+  end
+
   def remove_from_collection(gbd_id)
     collection.possessions.where(gbd_id: gbd_id).destroy_all
   end

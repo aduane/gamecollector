@@ -16,7 +16,19 @@ class Game
   end
 
   def title
-    api_data.title
+    if possession.present? && possession.game_title.present?
+      possession.game_title
+    else
+      api_data.title
+    end
+  end
+
+  def platform
+    if possession.present? && possession.game_platform.present?
+      possession.game_platform
+    else
+      api_data.platform
+    end
   end
 
   private

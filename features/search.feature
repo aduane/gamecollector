@@ -16,19 +16,31 @@ Feature: Search
     And I should see "Mario 4"
     And I should see "Mario 5"
 
-  #Scenario: Add to collection from search
-  #  Given there exists 1 "Zelda" games
-  #  When I sign in
-  #  And I view my collection
-  #  Then I should see "Andrew's Collection"
-  #  And I should see "There are no games in your collection"
-  #  When I search for "Zelda"
-  #  Then I should see "1 game matched your search."
-  #  And I should see "Zelda 1"
-  #  And I click to add the game to my collection
-  #  Then I should see "In your Collection"
-  #  And I should not see "Add to Collection"
-  #  When I view my collection
-  #  Then I should see "Andrew's Collection"
-  #  And I should not see "There are no games in your collection"
-  #  And I should see "Zelda 1"
+@javascript
+  Scenario: Add to collection from search
+    Given there exists 1 "Zelda" games
+    When I sign in
+
+    # no games in collection
+    And I view my collection
+    Then I should see "Andrew's Collection"
+    And I should see "There are no games in your collection"
+
+    # add game to collection
+    When I search for "Zelda"
+    Then I should see "1 game matched your search."
+    And I should see "Zelda 1"
+    And I click to add the game to my collection
+    Then I should see "In your collection"
+    And I should not see "Add to collection"
+
+    # one game in collection
+    When I view my collection
+    Then I should see "Andrew's Collection"
+    And I should not see "There are no games in your collection"
+    And I should see "Zelda 1"
+
+    # search page knows you own it
+    When I search for "Zelda"
+    Then I should not see "Add to collection"
+    And I should see "In your collection"

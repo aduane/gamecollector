@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150618012808) do
+ActiveRecord::Schema.define(version: 20150620194747) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,8 +29,10 @@ ActiveRecord::Schema.define(version: 20150618012808) do
   create_table "possessions", force: :cascade do |t|
     t.integer  "gbd_id"
     t.integer  "list_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.string   "game_title"
+    t.string   "game_platform"
   end
 
   add_index "possessions", ["list_id"], name: "index_possessions_on_list_id", using: :btree
