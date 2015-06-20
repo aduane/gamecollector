@@ -10,3 +10,8 @@ Feature: Logging in
     And I should not see "Welcome"
     And I should not see "Start keeping track of your game collection."
     And I should see "Andrew's Collection"
+    # when logged in, the home page redirects to your collection
+    When I go to the home page
+    Then I should not see "Welcome"
+    And I should not see "Start keeping track of your game collection."
+    And I should see "Andrew's Collection"
