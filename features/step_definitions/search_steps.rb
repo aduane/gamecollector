@@ -15,6 +15,10 @@ When(/^I search for "(.*?)"$/) do |search_term|
   click_on "Search"
 end
 
+Then(/^the search box should contain "(.*?)"$/) do |string|
+  assert page.has_selector?("input#search_term[value='#{string}']")
+end
+
 def stub_game_search(search_term, games)
   xml_response = %{<?xml version="1.0" encoding="UTF-8" ?>
     <Data>}

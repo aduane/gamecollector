@@ -1,4 +1,10 @@
 Feature: Search
+  Scenario: Search box stays populated 
+    Given there exists 0 "Mario" games
+    When I sign in
+    And I search for "Mario"
+    Then the search box should contain "Mario"
+
   Scenario: Search with no matches
     Given there exists 0 "Mario" games
     When I sign in

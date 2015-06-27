@@ -14,7 +14,7 @@
         %li
           %form.navbar-form.navbar-left{method: 'get', action: search_url}
             .form-group
-              %input#search_term.form-control{type: "text", placeholder: "Super Bros. 8", name: "search_term"}
+              %input#search_term.form-control{type: "text", placeholder: "Super Bros. 8", name: "search_term", value: params[:search_term].present? ? params[:search_term] : nil}
               %button.btn.btn-default{type: "submit"}
                 Search
         = render 'layouts/navigation_links'
