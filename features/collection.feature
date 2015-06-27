@@ -1,4 +1,9 @@
 Feature: Collection
+  Scenario: Not signed in
+    When I view my collection
+    Then I should see "You need to sign in for access to this page."
+    And I should see "Start keeping track of your game collection."
+
   Scenario: No games in collection
     When I sign in
     And I view my collection
