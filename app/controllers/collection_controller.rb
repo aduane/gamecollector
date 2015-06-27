@@ -2,6 +2,11 @@ class CollectionController < ApplicationController
 
   def show
     @user = current_user
+    if params[:platform].present? && params[:platform] != "All platforms"
+      @games = @user.owned_games(game_platform: params[:platform])
+    else
+      @games = @user.owned_games
+    end
   end
 
   def add_to_collection

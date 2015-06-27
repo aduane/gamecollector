@@ -6,8 +6,8 @@ class User < ActiveRecord::Base
     @collection ||= Collection.where(user_id: self.id).first_or_create!
   end
 
-  def owned_games
-    @owned_games ||= collection.games
+  def owned_games(options = {})
+    @owned_games ||= collection.games(options)
   end
 
   def owns_game?(game)

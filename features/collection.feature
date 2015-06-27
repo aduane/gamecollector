@@ -23,6 +23,30 @@ Feature: Collection
     And I should see "Mario 5"
 
 @javascript
+  Scenario: View games by platform
+    Given I sign in
+    And I own 5 "Mario" Games
+    When I view my collection
+    And I choose to look at "Game Box 3" games
+    Then I should not see "Mario 1"
+    And I should not see "Mario 2"
+    And I should see "Mario 3"
+    And I should not see "Mario 4"
+    And I should not see "Mario 5"
+    When I choose to look at "Game Box 5" games
+    Then I should not see "Mario 1"
+    And I should not see "Mario 2"
+    And I should not see "Mario 3"
+    And I should not see "Mario 4"
+    And I should see "Mario 5"
+    When I choose to look at "All" games
+    Then I should see "Mario 1"
+    And I should see "Mario 2"
+    And I should see "Mario 3"
+    And I should see "Mario 4"
+    And I should see "Mario 5"
+
+@javascript
   Scenario: Remove game from collection
     Given I sign in
     And I own 1 "Mario" Game

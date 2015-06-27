@@ -1,29 +1,37 @@
-%h3
-  #{@user.name}'s Collection
+.row
+  %h3
+    #{@user.name}'s Collection
 
-- if @user.owned_games.present?
-  %table.table.table-striped.table-responsive.tablesorter
-    %thead
-      %tr
-        %th
-          Title
-        %th
-          Platform
-        %th
-          Date Added
-        %th.remove-button
-          Remove
-    %tbody.game-list
-      - @user.owned_games.each do |game|
-        %tr{class: "game-#{game.gbd_id}"}
-          %td= link_to game.title, "http://thegamesdb.net/game/#{game.gbd_id}", target: "_blank"
-          %td= game.platform
-          %td= game.possession.created_at.to_date
-          %td.remove-button
-            = form_tag( remove_from_collection_url, method: :post, remote: true, class: "remove-from-collection-#{game.gbd_id}" ) do
-              = hidden_field_tag :gbd_id, game.gbd_id
-              = submit_tag "X", class: "btn btn-mini btn-danger"
+  - if @user.owned_games.present?
+    = form_tag( my_collection_url, method: :get) do
+      - platforms = @user.collection.possessions.select(:game_platform).order(game_platform: :asc).uniq.pluck(:game_platform)
+      - preselected_choice = params[:platform].present? ? params[:platform] : "All platforms"
+      .form-group.col-md-3
+        = select_tag :platform, options_for_select(["All platforms"] + platforms, preselected_choice), class: "form-control"
+    .row
+      .col-md-12
+        %table.table.table-striped.table-responsive.tablesorter
+          %thead
+            %tr
+              %th
+                Title
+              %th
+                Platform
+              %th
+                Date Added
+              %th.remove-button
+                Remove
+          %tbody.game-list
+            - @user.owned_games.each do |game|
+              %tr{class: "game-#{game.gbd_id}"}
+                %td= link_to game.title, "http://thegamesdb.net/game/#{game.gbd_id}", target: "_blank"
+                %td= game.platform
+                %td= game.possession.created_at.to_date
+                %td.remove-button
+                  = form_tag( remove_from_collection_url, method: :post, remote: true, class: "remove-from-collection-#{game.gbd_id}" ) do
+                    = hidden_field_tag :gbd_id, game.gbd_id
+                    = submit_tag "X", class: "btn btn-mini btn-danger"
 
-- else
-  .alert.alert-info
-    There are no games in your collection
+  - else
+    .alert.alert-info
+      There are no games in your collection

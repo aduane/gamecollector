@@ -18,8 +18,17 @@ class UserTest < ActiveSupport::TestCase
   end
 
   context "#owned_games" do
+    setup do
+      @user.add_to_collection(7, "Fun Game", "Gamebox")
+      @user.add_to_collection(6, "Cool Game", "Gamebox pocket")
+    end
+
     should "be the games in a user's collection" do
       assert_equal @user.collection.games, @user.owned_games 
+    end
+
+    should "take options for the query on possessions" do
+      assert_equal [Game.from_gbd_id(6)], @user.owned_games(game_platform: "Gamebox pocket")
     end
   end
 

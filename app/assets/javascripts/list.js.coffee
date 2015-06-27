@@ -10,3 +10,7 @@ $ ->
           }
       }
   });
+
+  $("select#platform").on("change", ->
+    $(this).closest('form').submit()
+  )

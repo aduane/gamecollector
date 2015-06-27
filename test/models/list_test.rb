@@ -16,5 +16,9 @@ class ListTest < ActiveSupport::TestCase
       assert_equal @list.possessions.count, @list.games.count
       assert_equal Game.from_gbd_id(1), @list.games.first
     end
+
+    should "take options for the possessions query" do
+      assert_equal [Game.from_gbd_id(3)], @list.games(gbd_id: 3)
+    end
   end
 end

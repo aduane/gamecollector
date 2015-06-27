@@ -6,13 +6,21 @@ Given(/^I own (\d+) "(.*?)" Game.?$/) do |number, name|
   user = User.last
   1.upto(number.to_i) do |num|
     gbd_id = stub_game(num, "#{name} #{num}")
-    user.add_to_collection(gbd_id, "#{name} #{num}", "Game Box")
+    user.add_to_collection(gbd_id, "#{name} #{num}", "Game Box #{num}")
   end
 end
 
 When(/^I click the button to remove a game from my collection$/) do
   within ".game-list" do
     click_on("X")
+  end
+end
+
+When(/^I choose to look at "(.*?)" games$/) do |platform_name|
+  if platform_name == "All"
+    select("All platforms", from: "platform")
+  else
+    select(platform_name, from: "platform")
   end
 end
 
@@ -25,8 +33,8 @@ def stub_game(num, name)
   <Game>
     <id>112</id>
     <GameTitle>#{name}</GameTitle>
-    <PlatformId>1</PlatformId>
-    <Platform>Game Box</Platform>
+    <PlatformId>#{num}</PlatformId>
+    <Platform>Game Box #{num}</Platform>
     <ReleaseDate>01/01/2001</ReleaseDate>
     <Publisher>Games, Inc.</Publisher>
   </Game>
