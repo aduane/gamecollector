@@ -1,0 +1,5 @@
+$ ->
+  $("img.boxart").unveil()
+  $("img.boxart").on('error', ->
+    $(this).attr('src', '<%= asset_path("boxart-not-found.png") %>')
+  )
