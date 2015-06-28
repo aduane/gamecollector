@@ -9,8 +9,7 @@
     %small= game.instance_variable_get(:@release_date)
     %br
     - if current_user.owns_game?(game)
-      %a.btn.btn-success.disabled
-        In your collection
+      = render 'collection/in_your_collection'
     - else
       = form_tag( add_to_collection_url, method: :post, remote: true, class: "add-to-collection-#{game.gbd_id}" ) do
         = hidden_field_tag :gbd_id, game.gbd_id

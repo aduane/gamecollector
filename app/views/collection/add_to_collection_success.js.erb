@@ -1,2 +1,2 @@
 $(".add-to-collection-<%= @possession.gbd_id %>").remove();
-$(".game-search-item.game-<%= @possession.gbd_id %>").append("<a class='btn btn-success'>In your collection</a>");
+$(".game-search-item.game-<%= @possession.gbd_id %>").append("<%= j render 'collection/in_your_collection' %>");
