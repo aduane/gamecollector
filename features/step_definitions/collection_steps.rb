@@ -2,6 +2,10 @@ When(/^I view my collection$/) do
   visit '/my_collection'
 end
 
+When(/^I view the collection for "(.*?)"$/) do |name|
+  visit collection_path(id: User.where(name: name).first!.uid)
+end
+
 Given(/^I own (\d+) "(.*?)" Game.?$/) do |number, name|
   user = User.last
   1.upto(number.to_i) do |num|

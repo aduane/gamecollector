@@ -6,3 +6,7 @@ When(/^I sign in$/) do
   visit '/'
   click_link "Sign in"
 end
+
+When(/^I log out$/) do
+  visit '/signout'
+end

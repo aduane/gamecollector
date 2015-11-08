@@ -1,17 +1,8 @@
 class UsersController < ApplicationController
-  before_filter :admin_only, except: [:show]
+  before_filter :admin_only
 
   def index
     @users = User.all
-  end
-
-  def show
-    @user = User.find(params[:id])
-    unless current_user.admin?
-      unless @user == current_user
-        redirect_to :back, :alert => "Access denied."
-      end
-    end
   end
 
   def update

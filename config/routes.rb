@@ -1,9 +1,10 @@
 Rails.application.routes.draw do
-  resources :users
+  resources :users, except: :show
   root to: 'visitors#index'
 
   # collection
-  get '/my_collection' => 'collection#show', as: :my_collection
+  get '/my_collection' => 'collection#my_collection', as: :my_collection
+  get '/collection/:id' => 'collection#collection', as: :collection
   post '/collection/add_to_collection', as: :add_to_collection
   post '/collection/remove_from_collection', as: :remove_from_collection
   

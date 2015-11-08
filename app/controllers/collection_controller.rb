@@ -1,12 +1,16 @@
 class CollectionController < ApplicationController
+  skip_before_filter :authenticate_user!, only: :collection
 
-  def show
+  def my_collection
     @user = current_user
-    if params[:platform].present? && params[:platform] != "All platforms"
-      @games = @user.owned_games(game_platform: params[:platform])
-    else
-      @games = @user.owned_games
-    end
+    set_games_for_user @user
+    render :show
+  end
+
+  def collection
+    @user = User.where(uid: params[:id]).first!
+    set_games_for_user @user
+    render :show
   end
 
   def add_to_collection
@@ -44,6 +48,14 @@ class CollectionController < ApplicationController
   end
 
   private
+
+  def set_games_for_user(user)
+    if params[:platform].present? && params[:platform] != "All platforms"
+      @games = user.owned_games(game_platform: params[:platform])
+    else
+      @games = user.owned_games
+    end
+  end
 
   def possession_parameters
     params.permit(:gbd_id, :game_title, :game_platform)

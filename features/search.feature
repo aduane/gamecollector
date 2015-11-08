@@ -29,8 +29,8 @@ Feature: Search
 
     # no games in collection
     And I view my collection
-    Then I should see "Andrew's Collection"
-    And I should see "There are no games in your collection"
+    Then I should see "Your Collection"
+    And I should see "You haven't added any games yet!"
 
     # add game to collection
     When I search for "Zelda"
@@ -42,8 +42,8 @@ Feature: Search
 
     # one game in collection
     When I view my collection
-    Then I should see "Andrew's Collection"
-    And I should not see "There are no games in your collection"
+    Then I should see "Your Collection"
+    And I should not see "You haven't added any games yet!"
     And I should see "Zelda 1"
 
     # search page knows you own it

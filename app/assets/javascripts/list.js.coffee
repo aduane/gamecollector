@@ -14,3 +14,4 @@ $ ->
   $("select#platform").on("change", ->
     $(this).closest('form').submit()
   )
+  $('#share-link').popover({html: true})

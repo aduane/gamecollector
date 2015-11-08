@@ -1,9 +1,17 @@
+- collection_is_for_current_user = (@user == current_user)
 .row
   %h3
-    #{@user.name}'s Collection
+    - if collection_is_for_current_user
+      Your Collection
+      - link_box = capture_haml do
+        %input{value: collection_url(id: @user.uid.to_i), disabled: true, size: 30}
+      %button#share-link.btn.btn-default.btn-sm{type: 'button', data: {toggle: 'popover', content: link_box, trigger: 'focus'}, title: 'Use this link to share your collection with others.'}
+        %i.fa.fa-share-alt
+    - else
+      #{@user.name}'s Collection
 
   - if @user.owned_games.present?
-    = form_tag( my_collection_url, method: :get) do
+    = form_tag( collection_is_for_current_user ? my_collection_url : collection_url(user_id: @user.id), method: :get) do
       - platforms = @user.collection.possessions.select(:game_platform).order(game_platform: :asc).uniq.pluck(:game_platform)
       - preselected_choice = params[:platform].present? ? params[:platform] : "All platforms"
       .form-group.col-md-3
@@ -19,19 +27,15 @@
                 Platform
               %th
                 Date Added
-              %th.remove-button
-                Remove
+              - if collection_is_for_current_user
+                %th.remove-button
+                  Remove
           %tbody.game-list
             - @user.owned_games.each do |game|
-              %tr{class: "game-#{game.gbd_id}"}
-                %td= link_to game.title, "http://thegamesdb.net/game/#{game.gbd_id}", target: "_blank"
-                %td= game.platform
-                %td= game.possession.created_at.to_date
-                %td.remove-button
-                  = form_tag( remove_from_collection_url, method: :post, remote: true, class: "remove-from-collection-#{game.gbd_id}" ) do
-                    = hidden_field_tag :gbd_id, game.gbd_id
-                    = submit_tag "X", class: "btn btn-mini btn-danger"
-
+              = render 'games/collection_table_row', game: game
   - else
     .alert.alert-info
-      There are no games in your collection
+      - if collection_is_for_current_user
+        You haven't added any games yet! Use the search box in the menu to find them.
+      - else
+        #{@user.name} hasn't added any games yet!
