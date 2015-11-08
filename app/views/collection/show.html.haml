@@ -5,7 +5,7 @@
       Your Collection
       - link_box = capture_haml do
         %input{value: collection_url(id: @user.uid.to_i), disabled: true, size: 30}
-      %button#share-link.btn.btn-default.btn-sm{type: 'button', data: {toggle: 'popover', content: link_box, trigger: 'focus'}, title: 'Use this link to share your collection with others.'}
+      %button#share-link.btn.btn-default.btn-sm{type: 'button', data: {toggle: 'popover', content: link_box}, title: 'Use this link to share your collection with others.'}
         %i.fa.fa-share-alt
     - else
       #{@user.name}'s Collection
